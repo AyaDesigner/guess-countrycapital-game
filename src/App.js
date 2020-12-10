@@ -2,7 +2,7 @@ import './App.css';
 import React from 'react';
 import Game from './components/Game';
 import Axios from 'axios';
-import Timer from './components/Timer';
+// import Timer from './components/Timer';
 
 class App extends React.Component {
   constructor(props) {
