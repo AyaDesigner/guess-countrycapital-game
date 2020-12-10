@@ -36,3 +36,15 @@
     transform: rotate(360deg);
   }
 }
+
+#button{
+  margin: 3px;
+  width:300px;
+}
+
+.game-container{
+  padding-top: 100px;
+  display: flex;
+  justify-content: center;
+}
+
