@@ -18,35 +18,37 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function Game(props) {
-    
+
     const classes = useStyles();
 
     return (
 
         <div className="game-container">
             <Card className={classes.root}>
-                
+
                 <CardContent
-                
+
                     align="center"
                 >
                     <div>
                         <Typography gutterBottom variant="h4"></Typography>
                     </div>
-                    <div>
-                        <Typography gutterBottom variant="h3">{props.countryObj.name}</Typography>
+                    <div>{props.gameOver ? "" : <Typography gutterBottom variant="h3">{props.countryObj.name}</Typography>}
+                        
                     </div>
                     <ButtonGroup className="buttons"
                         orientation="vertical"
                         color="primary"
                         aria-label="vertical contained primary button group"
                         variant="contained">
-                        {props.capitals.map((option, i) => <Button id="button" onClick={() => props.checkAnswer(option)}>{option !== "" ? option : "No capital"}</Button>)}
+                        {props.gameOver ? 
+                            <Button onClick={() => props.restartGame()}> Start again!</Button>: props.capitals.map((option, i) => <Button id="button" onClick={() => props.checkAnswer(option)}>{option !== "" ? option : "No capital"}</Button>)}
                     </ButtonGroup>
-                    <Typography variant="h5">Your score:</Typography>
-                    <Typography variant="h3">{props.score}</Typography>
-                    <Typography variant="h4">{props.finalMessage}</Typography>
-
+                    <div className="results-container">
+                        <Typography variant="h5">Your score:</Typography>
+                        <Typography variant="h3">{props.score}</Typography>
+                        <Typography variant="h4">{props.finalMessage}</Typography>
+                    </div>
                 </CardContent>
 
             </Card>

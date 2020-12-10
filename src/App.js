@@ -2,6 +2,12 @@ import './App.css';
 import React from 'react';
 import Game from './components/Game';
 import Axios from 'axios';
+import Button from '@material-ui/core/Button';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+
+
 // import Timer from './components/Timer';
 
 class App extends React.Component {
@@ -14,7 +20,10 @@ class App extends React.Component {
       randomCapitals: [],
       rightAnswer: '',
       score: 0,
-      finalMessage: ''
+      finalMessage: '',
+      rightAnswersCounter: 0,
+      wrongAnswersCounter: 0,
+      gameOver: false
     }
   }
 
@@ -62,23 +71,38 @@ class App extends React.Component {
   }
 
   checkIfAnswerIsRight = (userAnswer) => {
-      
-     if (this.state.rightAnswer === userAnswer) {
-      if (this.state.score + 2 === 10) {
+
+    if (this.state.rightAnswer === userAnswer) {
+      if (this.state.score + 2 >= 4) {
         this.setState({
-          finalMessage: "Game Over"
+          finalMessage: "Correct answers: " + (this.state.rightAnswersCounter + 1) + "/" + (this.state.rightAnswersCounter + this.state.wrongAnswersCounter + 1),
+          gameOver: true
         })
-      } 
+      }
       this.setState({
-        score: this.state.score + 2
+        score: this.state.score + 2,
+        rightAnswersCounter: this.state.rightAnswersCounter + 1
       })
     }
     else {
       this.setState({
-        score: this.state.score - 1
+        score: this.state.score - 1,
+        wrongAnswersCounter: this.state.wrongAnswersCounter + 1
       })
     }
     this.getRandomCountryAndCapital()
+  }
+
+
+  restartGame = () => {
+    this.setState({ 
+      rightAnswer: '',
+      score: 0,
+      finalMessage: '',
+      rightAnswersCounter: 0,
+      wrongAnswersCounter: 0,
+      gameOver: false
+     });
   }
 
 
@@ -91,10 +115,12 @@ class App extends React.Component {
         score={this.state.score}
         checkAnswer={this.checkIfAnswerIsRight}
         finalMessage={this.state.finalMessage}
+        gameOver={this.state.gameOver}
+        restartGame={this.restartGame}
       /> : <p>Loading...</p>}
 
-{/* <div><Timer /></div> */}
-
+      {/* <div><Timer /></div> */}
+      
     </div>);
   }
 }
